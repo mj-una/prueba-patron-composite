@@ -1,12 +1,13 @@
-// app/componentes/ui_Comentario.js
+// app//ui/componentes/Comentario.js
 /////////////////////////////////////
 
-import Componente from "./Componente.js";
+import Nodo from "../Nodo.js";
+import { EVNT } from "../../sketch.js";
 
 /////////////////////////////////////
 
 // Clase concreta: PENDIENTE
-export default class Comentario extends Componente {
+export default class Comentario extends Nodo {
   constructor(_x, _y, _t) {
   
     super({

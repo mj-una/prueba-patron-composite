@@ -1,13 +1,13 @@
-// app/componentes/ui_Boton.js
+// app//ui/componentes/Boton.js
 /////////////////////////////////////
 
-import Componente from "./Componente.js";
-import { EVNT } from "../main.js";
+import Nodo from "../Nodo.js";
+import { EVNT } from "../../sketch.js";
 
 /////////////////////////////////////
 
 // Clase concreta: PENDIENTE
-export default class Boton extends Componente {
+export default class Boton extends Nodo {
   constructor(_x, _y, _t) {
 
     super({

@@ -1,7 +1,7 @@
-// app/componentes/Componente.js
+// app/ui/Nodo.js
 /////////////////////////////////////
 
-import ER from "./errores.js";
+import ER from "../errores.js";
 import { CNFG } from "../config/singleton.js";
 
 /////////////////////////////////////
@@ -10,7 +10,7 @@ import { CNFG } from "../config/singleton.js";
  * 
  *	CLASE ABSTRACTA: PATRON COMPOSITE
  * 
- *	Componente --> prototipo de nodo para ui interoperable en canvas
+ *	Nodo --> prototipo de componente para ui interoperable en canvas
  *	(puede contener otros nodos, formando asi un arbol de jeraquia)
  * 
  *	@constructor --> recibe CONFIG del nodo
@@ -25,7 +25,7 @@ import { CNFG } from "../config/singleton.js";
  *
  **  **  **  **  **/
 
-export default class Componente {
+export default class Nodo {
 	constructor(_cnfgLocal) { // _cnfgLocal: id, x, y, w, h, c
 
 		// identificador unico
@@ -74,7 +74,7 @@ export default class Componente {
 	anidarContenido(_nodo) {
 
 		// validar si parametro "_nodo" es una instancia
-		if (CNFG.DBG) ER.esInstancia(_nodo, Componente);
+		if (CNFG.DBG) ER.esInstancia(_nodo, Nodo);
 		
 		// actualizar posicion interna
 		_nodo.calcularAcumulado([this.ax, this.ay]);

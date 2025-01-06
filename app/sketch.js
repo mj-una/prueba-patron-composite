@@ -1,10 +1,10 @@
-// app/main.js
+// app/sketch.js
 /////////////////////////////////////
 
 import "./libs/p5.min.js";
-import Boton from "./componentes/ui_Boton.js";
-import Comentario from "./componentes/ui_Comentario.js";
-import Contenedor from "./componentes/ui_Contenedor.js";
+import Boton from "./ui/componentes/Boton.js";
+import Comentario from "./ui/componentes/Comentario.js";
+import Contenedor from "./ui/componentes/Contenedor.js";
 
 /////////////////////////////////////
 
