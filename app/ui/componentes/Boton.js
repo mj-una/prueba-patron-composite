@@ -31,6 +31,7 @@ export default class Boton extends Click(Nodo) {
     if (!this.colisionRect(mouseX, mouseY)) return;
     
     this.fillA = (this.fillA + 5) %  255;
+    this.logClick(mouseX, mouseY);
 
     // const despl = [mouseX - this.w * 0.5, mouseY - this.h * 0.5];
     // this.calcularAcumulado(despl);
