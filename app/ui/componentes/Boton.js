@@ -2,12 +2,15 @@
 /////////////////////////////////////
 
 import Nodo from "../Nodo.js";
+import Click from "../mixins/Click.js";
+
+// parche para prueba rapida
 import { EVNT } from "../../sketch.js";
 
 /////////////////////////////////////
 
 // Clase concreta: PENDIENTE
-export default class Boton extends Nodo {
+export default class Boton extends Click(Nodo) {
   constructor(_x, _y, _t) {
 
     super({
