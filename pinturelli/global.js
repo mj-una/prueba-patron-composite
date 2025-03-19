@@ -8,7 +8,7 @@ export default function createGlobal(resolution, debug) {
 	const GLOBAL = {};
 
 	GLOBAL.CONFIG = { resolution, debug };
-	GLOBAL.MEMO_KY = {}; // key="id": value={}. {id: {id, type...}, id: {...}}
+	GLOBAL.MEMO_KY = new Map(); // key="id": value={}. {id: {id, type...}, id: {...}}
 	GLOBAL.DRAW_LS = []; // list in render order. [{id, type...}, {...}, {...}]
 	GLOBAL.EMITTER = Emitter; // initialize in sketch -> setup. 
 	GLOBAL.CHANNEL = new Channel(GLOBAL); // reactive paradigm for events

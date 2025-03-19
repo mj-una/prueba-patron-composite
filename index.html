@@ -3,19 +3,39 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<title>Document</title>
-
-	
-
+	<script src="pinturelli/api/index.js" type="module"></script>
+	<title>Prueba api</title>
 </head>
 <body>
-<script type="module">
+<script>
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-  import createPinturelli from "./pinturelli/api.js";
+const seed = createPinturelli(540, true);
 
-  const ui = createPinturelli(540, true);
+const bloqueSup = seed.append({
+	id: "bloqueSup",
+	type: "block",
+});
 
+const btnIzq = bloqueSup.append({
+	id: "btnIzq",
+	type: "button",
+});
+
+const btnDer = {
+	id: "btnDer",
+	type: "button",
+}
+
+seed.select("#bloqueSup").append(btnDer);
+
+seed.plant();
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 </script>
 </body>
 </html>

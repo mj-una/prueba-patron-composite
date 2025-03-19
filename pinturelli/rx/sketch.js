@@ -1,4 +1,4 @@
-export default function runSketch(_G_, initDateNow) {
+export default function runSketch(GLOBAL, initDateNow) {
 
   //________
   window.preload = function() {
@@ -7,7 +7,7 @@ export default function runSketch(_G_, initDateNow) {
     const ready = {};
 
     // assets = [{id, source, q5function, callback, loaded}, {...}]
-    for (node in _G_.MEMO_KY) {
+    for (node in GLOBAL.MEMO_KY) {
       if (node.assets.length === 0) continue;
 
       node.assets.forEach((_objt) => {
@@ -28,10 +28,10 @@ export default function runSketch(_G_, initDateNow) {
     noLoop();
     clear();
 
-    const ClassEmitter = _G_.EMITTER(_G_);
-    _G_.EMITTER = new ClassEmitter(_G_);
+    const ClassEmitter = GLOBAL.EMITTER(GLOBAL);
+    GLOBAL.EMITTER = new ClassEmitter(GLOBAL);
     
-    if (_G_.CONFIG.debug) {
+    if (GLOBAL.CONFIG.debug) {
       console.log(`Setup finished at ${Date.now() - initDateNow}ms`)
     }
   }
@@ -39,7 +39,7 @@ export default function runSketch(_G_, initDateNow) {
   //________
   window.touchStarted = function(_evnt) {
     _evnt.preventDefault();
-    _G_.EMITTER.touchStarted(_evnt, {
+    GLOBAL.EMITTER.touchStarted(_evnt, {
       t: Date.now() - initDateNow,
       x: mouseX,
       y: mouseY,
@@ -49,7 +49,7 @@ export default function runSketch(_G_, initDateNow) {
   //________
   window.touchEnded = function(_evnt) {
     _evnt.preventDefault();
-    _G_.EMITTER.touchEnded(_evnt, {
+    GLOBAL.EMITTER.touchEnded(_evnt, {
       t: Date.now() - initDateNow,
       x: mouseX,
       y: mouseY,
@@ -59,10 +59,12 @@ export default function runSketch(_G_, initDateNow) {
   //________
   window.touchDragged = function(_evnt) {
     _evnt.preventDefault();
-    _G_.EMITTER.touchDragged(_evnt, {
+    GLOBAL.EMITTER.touchDragged(_evnt, {
       t: Date.now() - initDateNow,
       x: mouseX,
       y: mouseY,
     });
   }
+
+  return GLOBAL;
 }
