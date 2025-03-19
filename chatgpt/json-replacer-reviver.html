@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<script>
+console.log("____________");
+
+
+/////////////////////////////////////////////
+// Ejemplo 1: Objeto simple
+
+const obj1 = { a: 1, b: 2 };
+
+function replacer1(key, value) {
+  // Orden de stringify:
+  // 1. key="" -> value: { a: 1, b: 2 } (objeto raíz)
+  // 2. key="a" -> value: 1
+  // 3. key="b" -> value: 2
+  console.log(`replacer1: key="${key}", value=${value}`);
+  return value;
+}
+
+const json1 = JSON.stringify(obj1, replacer1);
+console.log("JSON result 1:", json1);
+
+function reviver1(key, value) {
+  // Orden de parse (bottom-up):
+  // 1. key="a" -> value: 1
+  // 2. key="b" -> value: 2
+  // 3. key=""  -> value: { a: 1, b: 2 } (objeto raíz, con propiedades ya procesadas)
+  console.log(`reviver1: key="${key}", value=${value}`);
+  return value;
+}
+
+const parsedObj1 = JSON.parse(json1, reviver1);
+console.log("Parsed object 1:", parsedObj1);
+console.log("____________");
+
+
+/////////////////////////////////////////////
+// Ejemplo 2: Objeto anidado
+
+const obj2 = { a: { b: 2 } };
+
+function replacer2(key, value) {
+  // Orden de stringify:
+  // 1. key="" -> value: { a: { b: 2 } } (raíz)
+  // 2. key="a" -> value: { b: 2 }
+  // 3. key="b" -> value: 2
+  console.log(`replacer2: key="${key}", value=${typeof value === "object" ? JSON.stringify(value) : value}`);
+  return value;
+}
+
+const json2 = JSON.stringify(obj2, replacer2);
+console.log("JSON result 2:", json2);
+
+function reviver2(key, value) {
+  // Orden de parse:
+  // 1. key="b" -> value: 2
+  // 2. key="a" -> value: { b: 2 } (con "b" ya revivido)
+  // 3. key=""  -> value: { a: { b: 2 } } (raíz)
+  console.log(`reviver2: key="${key}", value=${typeof value === "object" ? JSON.stringify(value) : value}`);
+  return value;
+}
+
+const parsedObj2 = JSON.parse(json2, reviver2);
+console.log("Parsed object 2:", parsedObj2);
+console.log("____________");
+
+
+/////////////////////////////////////////////
+// Ejemplo 3: Objeto con propiedad array
+
+const obj3 = { a: ["pepe", 2] };
+
+function replacer3(key, value) {
+  // Orden de stringify:
+  // 1. key="" -> value: { a: [1, 2] } (raíz)
+  // 2. key="a" -> value: [1, 2]
+  // 3. key="0" -> value: 1 (primer elemento del array)
+  // 4. key="1" -> value: 2 (segundo elemento)
+  console.log(`replacer3: key="${key}", value=${value}`);
+  return value;
+}
+
+const json3 = JSON.stringify(obj3, replacer3);
+console.log("JSON result 3:", json3);
+
+function reviver3(key, value) {
+  // Orden de parse:
+  // 1. key="0" -> value: 1
+  // 2. key="1" -> value: 2
+  // 3. key="a" -> value: [1, 2] (array con elementos ya procesados)
+  // 4. key=""  -> value: { a: [1, 2] } (raíz)
+  console.log(`reviver3: key="${key}", value=${value}`);
+  return value;
+}
+
+const parsedObj3 = JSON.parse(json3, reviver3);
+console.log("Parsed object 3:", parsedObj3);
+console.log("____________");
+
+
+/////////////////////////////////////////////
+// Ejemplo 4: Array de objetos
+
+const arr4 = [ { a: 1 }, { b: 2 } ];
+
+function replacer4(key, value) {
+  // Orden de stringify:
+  // 1. key="" -> value: [ { a: 1 }, { b: 2 } ] (raíz)
+  // 2. key="0" -> value: { a: 1 }
+  // 3. key="a" -> value: 1 (dentro del objeto en índice 0)
+  // 4. key="1" -> value: { b: 2 }
+  // 5. key="b" -> value: 2 (dentro del objeto en índice 1)
+  console.log(`replacer4: key="${key}", value=${typeof value === "object" ? JSON.stringify(value) : value}`);
+  return value;
+}
+
+const json4 = JSON.stringify(arr4, replacer4);
+console.log("JSON result 4:", json4);
+
+function reviver4(key, value) {
+  // Orden de parse:
+  // 1. key="a" -> value: 1
+  // 2. key="0" -> value: { a: 1 } (con "a" ya procesado)
+  // 3. key="b" -> value: 2
+  // 4. key="1" -> value: { b: 2 } (con "b" ya procesado)
+  // 5. key=""  -> value: [ { a: 1 }, { b: 2 } ] (raíz)
+  console.log(`reviver4: key="${key}", value=${typeof value === "object" ? JSON.stringify(value) : value}`);
+  return value;
+}
+
+const parsedArr4 = JSON.parse(json4, reviver4);
+console.log("Parsed array 4:", parsedArr4);
+console.log("____________");
+
+
+/////////////////////////////////////////////
+// Ejemplo 5: Estructura mixta
+
+const obj5 = { a: { b: [ { c: 3 } ] } };
+
+function replacer5(key, value) {
+  // Orden de stringify:
+  // 1. key="" -> value: { a: { b: [ { c: 3 } ] } } (raíz)
+  // 2. key="a" -> value: { b: [ { c: 3 } ] }
+  // 3. key="b" -> value: [ { c: 3 } ]
+  // 4. key="0" -> value: { c: 3 } (primer elemento del array)
+  // 5. key="c" -> value: 3 (dentro del objeto en el array)
+  console.log(`replacer5: key="${key}", value=${typeof value === "object" ? JSON.stringify(value) : value}`);
+  return value;
+}
+
+const json5 = JSON.stringify(obj5, replacer5);
+console.log("JSON result 5:", json5);
+
+function reviver5(key, value) {
+  // Orden de parse:
+  // 1. key="c" -> value: 3
+  // 2. key="0" -> value: { c: 3 } (con "c" ya procesado)
+  // 3. key="b" -> value: [ { c: 3 } ] (array ya revivido)
+  // 4. key="a" -> value: { b: [ { c: 3 } ] } (con "b" ya procesado)
+  // 5. key=""  -> value: { a: { b: [ { c: 3 } ] } } (raíz)
+  console.log(`reviver5: key="${key}", value=${typeof value === "object" ? JSON.stringify(value) : value}`);
+  return value;
+}
+
+const parsedObj5 = JSON.parse(json5, reviver5);
+console.log("Parsed object 5:", parsedObj5);
+console.log("____________");
+
+
+/////////////////////////////////////////////
+// Metodos a JSON y de vuelta
+
+function replacer(key, value) {
+  if (typeof value === "function") {
+    return value.toString();
+  }
+  return value;
+}
+
+function reviver(key, value) {
+  if (typeof value === "string" && value.startsWith("function")) {
+    // Evalúa la cadena como función. Se envuelve en paréntesis para obtener una expresión válida.
+    return eval("(" + value + ")");
+  }
+  return value;
+}
+
+const ave = {
+  sumar: function(a, b) {
+    return a + b;
+  },
+  numero: 42
+}
+
+const jsonAve = JSON.stringify(ave, replacer);
+console.log("JSON_AVE serializado:", jsonAve);
+
+const fenix = JSON.parse(jsonAve, reviver);
+console.log(`Primer resultado de sumar: ${fenix.sumar(3, fenix.numero)}
+`); // 45
+
+const jsonFenix = JSON.stringify(fenix, replacer);
+console.log("JSON_FENIX serializado:", jsonFenix);
+
+const felix = JSON.parse(jsonFenix, reviver);
+console.log(`Segundo resultado de sumar: ${felix.sumar(3, felix.numero)}
+`); // 45
+
+
+/////////////////////////////////////////////
+</script>
+</body>
+</html>
